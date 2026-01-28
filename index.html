@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MALOSSI CATALOG 2026 | BIKE ALERT HELLAS</title>
+    
+    <!-- Scripts: React, ReactDOM, Babel, Tailwind, Lucide -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide-react@latest"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        html { scroll-behavior: smooth; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        body {
+            margin: 0;
+            background-color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            text-transform: uppercase;
+        }
+
+        img { object-fit: contain; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useMemo, useEffect } = React;
+        
+        const Icon = ({ name, size = 24, className = "" }) => {
+            const LucideIcon = LucideReact[name];
+            if (!LucideIcon) return null;
+            return <LucideIcon size={size} className={className} />;
+        };
+
+        const App = () => {
+            const [searchTerm, setSearchTerm] = useState('');
+            const [selectedBrand, setSelectedBrand] = useState('ΟΛΑ');
+            const [showTopBtn, setShowTopBtn] = useState(false);
+
+            const MALOSSI_LOGO = "data:image/svg+xml,%3csvg%20width='95'%20height='9'%20viewBox='0%200%20190%2018'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20clip-path='url(%23clip0_5328_68886)'%3e%3cpath%20d='M23.4231%200.00148714L20.1149%205.99855L18.9219%200.00148714H9.92122L0%2017.9944H9.00068L12.3613%2011.6893L13.5002%2017.9944H22.5008L25.8615%2011.6893L27.0003%2017.9944H35.9993L32.4221%200.00148714H23.4231Z'%20fill='%23C30106'/%3e%3cpath%20d='M179.99%200.00152988L176.817%2017.9944H185.818L188.991%200.00152988H179.99Z'%20fill='%23C30106'/%3e%3cpath%20d='M70.6726%200.00472018L67.4997%2017.9959L67.498%2017.9993H87.75L88.5436%2013.4998H77.2924L79.6715%200.00472018H70.6726Z'%20fill='%23C30106'/%3e%3cpath%20d='M104.472%2013.4958C106.337%2013.4958%20108.114%2011.9847%20108.442%2010.1216L108.838%207.87441C109.166%206.01132%20107.923%204.50021%20106.058%204.50021H103.807C101.942%204.50021%20100.166%206.01132%2099.8357%207.87441L99.4398%2010.1216C99.1115%2011.9847%20100.357%2013.4958%20102.22%2013.4958H104.472ZM98.0522%2017.9953C93.0823%2017.9953%2089.7639%2013.9679%2090.6404%208.99801C91.517%204.02809%2096.2551%20-0.000976562%20101.225%20-0.000976562H110.227C115.197%20-0.000976562%20118.514%204.02809%20117.639%208.99801C116.763%2013.9679%20112.023%2017.9953%20107.055%2017.9953H98.0522Z'%20fill='%23C30106'/%3e%3cpath%20d='M136.374%2011.2594C136.991%2011.2594%20137.404%2011.7603%20137.294%2012.378C137.186%2012.9956%20136.597%2013.4965%20135.979%2013.4965H129.216C128.598%2013.4965%20128.185%2012.9956%20128.295%2012.378H119.294C118.748%2015.4797%20120.819%2017.996%20123.922%2017.996H139.685C142.789%2017.996%20145.748%2015.4797%20146.295%2012.378C146.841%209.27451%20144.77%206.75994%20141.667%206.75994H130.404C129.786%206.75994%20129.378%206.23537%20129.486%205.61772C129.595%205.00008%20130.184%204.49919%20130.801%204.49919H137.565C138.182%204.49919%20138.595%205.00008%20138.487%205.61772H147.486C148.034%202.51597%20145.961%20-0.000299076%20142.86%20-0.000299076H127.095C123.992%20-0.000299076%20121.034%202.51597%20120.486%205.61772C119.939%208.72117%20122.007%2011.2594%20125.11%2011.2594H136.374Z'%20fill='%23C30106'/%3e%3cpath%20d='M165.631%2011.2593C166.249%2011.2593%20166.662%2011.7602%20166.552%2012.3779C166.444%2012.9955%20165.855%2013.4964%20165.237%2013.4964H158.474C157.856%2013.4964%20157.443%2012.9955%20157.553%2012.3779H148.552C148.006%2015.4796%20150.077%2017.9959%20153.18%2017.9959H168.943C172.046%2017.9959%20175.006%2015.4796%20175.553%2012.3779C176.099%209.27442%20174.028%206.75985%20170.925%206.75985H159.661C159.044%206.75985%20158.636%206.23527%20158.744%205.61763C158.853%204.99998%20159.441%204.4991%20160.059%204.4991H166.823C167.44%204.4991%20167.853%204.99998%20167.745%205.61763H176.744C177.292%202.51587%20175.219%20-0.000391912%20172.118%20-0.000391912H156.353C153.25%20-0.000391912%20150.292%202.51587%20149.744%205.61763C149.197%208.72108%20151.265%2011.2593%20154.368%2011.2593H165.631Z'%20fill='%23C30106'/%3e%3cpath%20d='M50.849%2011.2478L53.9727%205.38775L55.032%2011.2478H50.849ZM56.2504%2017.9978H65.2494L61.9818%200.00663944H47.864L38.249%2017.9978H47.2497L48.4495%2015.7472H55.8443L56.2504%2017.9978Z'%20fill='%23C30106'/%3e%3c/g%3e%3cdefs%3e%3cclipPath%20id='clip0_5328_68886'%3e%3crect%20width='190'%20height='18'%20fill='white'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e";
+
+            const products = [
+                { id: 'MAL-4519189', brand: 'KYMCO', model: 'LIKE S 125 IE 4T LC EURO 5 2021->', specs: 'DARK SMOKE | L.420XH.250 SP.3 MM', price: 115.16 },
+                { id: 'MAL-4519193', brand: 'KYMCO', model: 'DT X360 IE 4T LC EURO 5 2021->', specs: 'DARK SMOKE | L.330XH.290 SP.3 MM', price: 112.39 },
+                { id: 'MAL-4519199B', brand: 'HONDA', model: 'FORZA 125 IE 4T LC EURO 5 2021->', specs: 'DARK SMOKE | L.330XH.290 SP.3 MM', price: 103.92 },
+                { id: 'MAL-4519198', brand: 'HONDA', model: 'FORZA 750 IE 4T LC EURO 5 2021->', specs: 'DARK SMOKE | L.360XH.370 SP.3 MM', price: 107.97 },
+                { id: 'MAL-4514399', brand: 'APRILIA', model: 'SR MAX 125/300 IE 4T LC EURO 3', specs: 'DARK SMOKE | L.425XH.450 SP.3 MM', price: 89.28 },
+                { id: 'MAL-4513099', brand: 'GILERA', model: 'NEXUS 125/250/300/500 IE 4T LC', specs: 'DARK SMOKE | L.395XH.420 SP.3 MM', price: 103.92 },
+                { id: 'MAL-4514400', brand: 'GILERA', model: 'GP 800 4T LC (PIAGGIO M554M)', specs: 'DARK SMOKE | L.380XH.250 SP.3 MM', price: 97.53 },
+                { id: 'MAL-4514604', brand: 'YAMAHA', model: 'X MAX 125/250 IE 4T LC 2008->2009', specs: 'DARK SMOKE | L.380XH.290 SP.3 MM', price: 92.01 },
+                { id: 'MAL-4514607', brand: 'HONDA', model: 'SH I 300 IE 4T LC <-2010', specs: 'DARK SMOKE | L.466XH.357 SP.3 MM', price: 100.90 },
+                { id: 'MAL-4514608', brand: 'HONDA', model: 'SH I 125/150 IE 4T LC EURO 3 2009->', specs: 'DARK SMOKE | L.475XH.355 SP.3 MM', price: 85.44 },
+                { id: 'MAL-4514611', brand: 'HONDA', model: 'SH I 125/150 IE 4T LC <-2008', specs: 'DARK SMOKE | L.480XH.360 SP.3 MM', price: 93.00 },
+                { id: 'MAL-4514760', brand: 'YAMAHA', model: 'T MAX 500 IE 4T LC 2008->2011', specs: 'DARK SMOKE | L.460XH.688 SP.3 MM', price: 92.01 },
+                { id: 'MAL-4515116', brand: 'KYMCO', model: 'DOWNTOWN / DINK STREET 125/200/300', specs: 'DARK SMOKE | L.485XH.472 SP.3 MM', price: 100.90 },
+                { id: 'MAL-4515118', brand: 'VESPA', model: 'GTS / GTS SUPER / GTS HPE 125/250/300', specs: 'LIGHT SMOKE | L.500XH.330 SP.3 MM', price: 99.36 },
+                { id: 'MAL-4515120', brand: 'LML/VESPA', model: 'PX 80/125/150/200 & LML STAR', specs: 'LIGHT SMOKE | L.507XH.440 SP.3 MM', price: 102.52 },
+                { id: 'MAL-4515122', brand: 'LML/VESPA', model: 'PX 80/125/150/200 & LML STAR', specs: 'CLEAR | L.335XH.227 SP.3 MM', price: 86.24 },
+                { id: 'MAL-4515359', brand: 'HONDA', model: 'SH I 300 IE 4T LC 2011->2014', specs: 'DARK SMOKE | L.498XH.350 SP.3 MM', price: 94.24 },
+                { id: 'MAL-4515124', brand: 'YAMAHA', model: 'T MAX 530 IE 4T LC 2012->2016', specs: 'DARK SMOKE | L.445XH.430 SP.3 MM', price: 92.01 },
+                { id: 'MAL-4515361', brand: 'YAMAHA', model: 'T MAX 500 IE 4T LC 2001->2007', specs: 'DARK SMOKE | L.465XH.505 SP.3 MM', price: 100.90 },
+                { id: 'MAL-4515571B', brand: 'BMW', model: 'C SPORT 600/650 IE 4T LC', specs: 'DARK SMOKE | L.410XH.400 SP.3 MM', price: 112.39 },
+                { id: 'MAL-4515621B', brand: 'HONDA', model: 'INTEGRA 700/750 IE 4T LC', specs: 'DARK SMOKE | L.432XH.445 SP.3 MM', price: 94.24 },
+                { id: 'MAL-4516052', brand: 'MBK/YAMAHA', model: 'EVOLIS / X MAX 125/250/400 2014->', specs: 'DARK SMOKE | L.370XH.350 SP.3 MM', price: 100.90 },
+                { id: 'MAL-4516051B', brand: 'KYMCO', model: 'K-XCT 300 IE 4T LC EURO 3', specs: 'DARK SMOKE | L.445XH.530 SP.3 MM', price: 97.53 },
+                { id: 'MAL-4516053', brand: 'HONDA', model: 'SH I ABS 125/150 IE 2013->2016', specs: 'DARK SMOKE | L.530XH.420 SP.3 MM', price: 102.52 },
+                { id: 'MAL-4516054', brand: 'VESPA', model: 'LX 50/125/150 2T/4T/3V', specs: 'LIGHT SMOKE | L.478XH.367 SP.3 MM', price: 100.90 },
+                { id: 'MAL-4516055', brand: 'PIAGGIO', model: 'BEVERLY 300/350 IE 4T LC EURO 3/4', specs: 'DARK SMOKE | L.460XH.280 SP.3 MM', price: 99.36 },
+                { id: 'MAL-4516328', brand: 'YAMAHA', model: 'T MAX 530 IE 4T LC 2012->2016', specs: 'DARK SMOKE | L.380XH.230 SP.3 MM', price: 103.92 },
+                { id: 'MAL-4516330B', brand: 'KAWASAKI', model: 'J 125/300 IE 4T LC EURO 3/4', specs: 'DARK SMOKE | L.520XH.460 SP.3 MM', price: 103.92 },
+                { id: 'MAL-4516332', brand: 'VESPA', model: 'PRIMAVERA 50/125/150 / ELETTRICA', specs: 'LIGHT SMOKE | L.510XH.420 SP.3 MM', price: 107.04 },
+                { id: 'MAL-4516342', brand: 'VESPA', model: 'SPRINT 50/125/150 IE 4T', specs: 'LIGHT SMOKE | L.480XH.340 SP.3 MM', price: 107.04 },
+                { id: 'MAL-4516499', brand: 'HONDA', model: 'SH MODE 125 IE 4T LC EURO 3', specs: 'DARK SMOKE | L.540XH.400 SP.3 MM', price: 93.00 },
+                { id: 'MAL-4516502', brand: 'YAMAHA', model: 'MAJESTY S 125 / SMAX 160', specs: 'DARK SMOKE | L.360XH.410 SP.3 MM', price: 110.16 },
+                { id: 'MAL-4516574', brand: 'KYMCO', model: 'XCITING 400 IE 4T LC EURO 3', specs: 'DARK SMOKE | L.440XH.380 SP.3 MM', price: 91.51 },
+                { id: 'MAL-4518331', brand: 'HONDA', model: 'FORZA 125 IE 4T LC EURO 3 <-2016', specs: 'DARK SMOKE | L.370XH.370 SP.3 MM', price: 97.96 },
+                { id: 'MAL-4517070', brand: 'HONDA', model: 'SHI 300 IE 4T LC EURO 4 2015->', specs: 'DARK SMOKE | L.480XH.345 SP.3 MM', price: 97.96 },
+                { id: 'MAL-4517073', brand: 'KYMCO', model: 'DOWNTOWN / SUPER DINK 125/350', specs: 'DARK SMOKE | L.430XH.515 SP.3 MM', price: 97.53 },
+                { id: 'MAL-4517366', brand: 'PIAGGIO', model: 'LIBERTY 50/125/150 IGET EURO 3/4/5', specs: 'DARK SMOKE | L.450XH.340 SP.3 MM', price: 107.97 },
+                { id: 'MAL-4517448', brand: 'PIAGGIO', model: 'MEDLEY 125/150 IE 4T LC EURO 4', specs: 'DARK SMOKE | L.540XH.370 SP.3 MM', price: 97.96 },
+                { id: 'MAL-4517457', brand: 'KYMCO', model: 'GRAND DINK / X-TOWN 125/300', specs: 'DARK SMOKE | L.500XH.470 SP.3 MM', price: 103.92 },
+                { id: 'MAL-4517729', brand: 'HONDA', model: 'SH I ABS 125/150 IE EURO 4', specs: 'DARK SMOKE | L.450XH.350 SP.3 MM', price: 103.92 },
+                { id: 'MAL-4517810', brand: 'YAMAHA', model: 'T MAX 500 IE 4T LC 2008->2011', specs: 'DARK SMOKE | L.460XH.574 SP.3 MM', price: 97.53 },
+                { id: 'MAL-4517837', brand: 'YAMAHA', model: 'X MAX 125/300/400 2017->', specs: 'DARK SMOKE | L.360XH.340 SP.3 MM', price: 97.53 },
+                { id: 'MAL-4517841B', brand: 'YAMAHA', model: 'T MAX 530/560 DX/SX/TECH MAX', specs: 'DARK SMOKE | L.450XH.280 SP.3 MM', price: 100.90 },
+                { id: 'MAL-4517844', brand: 'KYMCO', model: 'AK 550 IE 4T LC EURO 4/5 2017->', specs: 'DARK SMOKE | L.390XH.500 SP.3 MM', price: 107.97 },
+                { id: 'MAL-4517875', brand: 'KYMCO', model: 'AGILITY R16 + 125 IE 4T EURO 4', specs: 'DARK SMOKE | L.460XH.350 SP.3 MM', price: 97.96 },
+                { id: 'MAL-4518330B', brand: 'HONDA', model: 'X-ADV 750 IE 4T LC EURO 4', specs: 'DARK SMOKE | L.340XH.450 SP.3 MM', price: 103.92 },
+                { id: 'MAL-4518331-MODERN', brand: 'HONDA', model: 'FORZA 125/300 IE 4T LC EURO 4 (2017-2020)', specs: 'DARK SMOKE | L.395XH.400 SP.3 MM', price: 97.96 },
+                { id: 'MAL-4518351B', brand: 'PIAGGIO', model: 'MP3 350 IE 4T LC EURO 4 2018->', specs: 'DARK SMOKE | L.410XH.440 SP.3 MM', price: 103.92 },
+                { id: 'MAL-4518354', brand: 'KYMCO', model: 'XCITING 400I S IE 4T LC EURO 4/5', specs: 'DARK SMOKE | L.320XH.460 SP.3 MM', price: 116.89 },
+                { id: 'MAL-4518407', brand: 'KYMCO', model: 'LIKE 50/125/150 CBS IE 4T EURO 4', specs: 'DARK SMOKE | L.460XH.340 SP.3 MM', price: 111.60 },
+                { id: 'MAL-4518641', brand: 'KYMCO', model: 'PEOPLE S 300 IE 4T LC EURO 4', specs: 'DARK SMOKE | L.495XH.315 SP.3 MM', price: 100.90 },
+                { id: 'MAL-4518761', brand: 'PIAGGIO', model: 'MEDLEY 125/150 IE 4T LC EURO 4/5', specs: 'DARK SMOKE | L.375XH.270 SP.3 MM', price: 115.97 },
+                { id: 'MAL-4518766', brand: 'HONDA', model: 'SHI ABS 125/150 IE 4T LC EURO 5', specs: 'DARK SMOKE | L.390XH.285 SP.3 MM', price: 114.66 },
+                { id: 'MAL-4519021', brand: 'HONDA', model: 'SH I 350 IE 4T LC EURO 5 2021->', specs: 'DARK SMOKE | L.390XH.275 SP.3 MM', price: 115.77 },
+                { id: 'MAL-4519027', brand: 'PIAGGIO', model: 'BEVERLY HPE 300/400 IE 4T LC EURO 5', specs: 'DARK SMOKE | L.410XH.250 SP.3 MM', price: 120.39 },
+                { id: 'MAL-4519043B', brand: 'HONDA', model: 'X-ADV 750 IE 4T LC EURO 5 2021->', specs: 'DARK SMOKE | L.310XH.440 SP.3 MM', price: 108.03 }
+            ];
+
+            useEffect(() => {
+                const handleScroll = () => setShowTopBtn(window.scrollY > 400);
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            const brands = useMemo(() => {
+                const b = new Set(products.map(p => p.brand));
+                return ['ΟΛΑ', ...Array.from(b).sort()];
+            }, []);
+
+            const filteredProducts = useMemo(() => {
+                return products.filter(p => {
+                    const query = searchTerm.toLowerCase();
+                    const matchesSearch = p.model.toLowerCase().includes(query) || 
+                                         p.id.toLowerCase().includes(query);
+                    const matchesBrand = selectedBrand === 'ΟΛΑ' || p.brand === selectedBrand;
+                    return matchesSearch && matchesBrand;
+                });
+            }, [searchTerm, selectedBrand]);
+
+            const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            const getProductImage = (sku) => {
+                const cleanId = sku.replace('MAL-', '').split('-')[0].toLowerCase();
+                return `https://wemalossistore.blob.core.windows.net/imgproducts/${cleanId}/${cleanId}_store.jpg`;
+            };
+
+            const getBikeAlertLink = (id) => {
+                const cleanId = id.split('-MODERN')[0].toLowerCase();
+                return `https://www.bikealert.gr/el/product/${cleanId}`;
+            };
+
+            return (
+                <div className="min-h-screen bg-white font-sans text-slate-900 selection:bg-red-100">
+                    <div className="bg-black text-[10px] text-white text-center py-1 font-bold tracking-[0.3em]">
+                        MALOSSI OFFICIAL DEALER REPRESENTATIVE • CATALOG 2026
+                    </div>
+
+                    <header className="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+                        <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row items-center justify-between gap-6">
+                            <div className="flex items-center gap-6">
+                                <div className="relative group cursor-pointer" onClick={() => window.location.reload()}>
+                                    <img src={MALOSSI_LOGO} alt="MALOSSI LOGO" className="relative h-8 md:h-12 w-auto object-contain" />
+                                </div>
+                                <div className="hidden md:block h-10 w-[1px] bg-slate-200" />
+                                <div className="flex flex-col">
+                                    <h1 className="text-xl md:text-2xl font-black italic tracking-tighter leading-none text-red-600">
+                                        SCREENS <span className="text-slate-300">2026</span>
+                                    </h1>
+                                    <span className="text-[10px] text-slate-400 font-bold tracking-widest mt-1 uppercase">AUTHORIZED CATALOG</span>
+                                </div>
+                            </div>
+
+                            <div className="relative w-full md:w-[400px]">
+                                <Icon name="Search" className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+                                <input 
+                                    type="text"
+                                    placeholder="ΑΝΑΖΗΤΗΣΗ ΜΟΝΤΕΛΟΥ Η ΚΩΔΙΚΟΥ..."
+                                    className="w-full bg-slate-100 border-none rounded-2xl py-4 pl-12 pr-12 focus:ring-2 focus:ring-red-600/20 focus:bg-white transition-all text-sm font-semibold shadow-inner uppercase"
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                />
+                                {searchTerm && <button onClick={() => setSearchTerm('')} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 hover:text-red-600 p-1"><Icon name="X" size={18} /></button>}
+                            </div>
+                        </div>
+                    </header>
+
+                    <main className="max-w-7xl mx-auto px-4 py-8">
+                        <div className="mb-12 bg-white p-6 rounded-[2rem] border border-slate-200 shadow-sm uppercase font-black">
+                            <div className="flex items-center gap-2 text-slate-400 mb-5 ml-1 font-bold">
+                                <Icon name="Filter" size={16} className="text-red-600" />
+                                <span className="text-[11px] tracking-[0.2em] uppercase">ΦΙΛΤΡΑΡΙΣΜΑ ΚΑΤΑΣΚΕΥΑΣΤΗ</span>
+                            </div>
+                            <div className="flex flex-wrap gap-2 md:gap-3">
+                                {brands.map(brand => (
+                                    <button key={brand} onClick={() => setSelectedBrand(brand)} className={`px-6 py-3 rounded-2xl text-xs font-black transition-all border ${selectedBrand === brand ? 'bg-slate-900 text-white border-slate-900 shadow-xl scale-105' : 'bg-slate-50 text-slate-500 border-slate-100 hover:bg-white hover:text-red-600 hover:shadow-md'}`}>{brand}</button>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="mb-8 flex items-center justify-between border-b border-slate-200 pb-4">
+                            <h2 className="text-lg font-black tracking-tight text-slate-800 uppercase">
+                                {selectedBrand === 'ΟΛΑ' ? 'ΟΛΟΙ ΟΙ ΚΩΔΙΚΟΙ' : `ΜΟΝΤΕΛΑ ${selectedBrand}`}
+                                <span className="ml-4 text-slate-300 font-bold text-sm tracking-widest uppercase">{filteredProducts.length} ΠΡΟΙΟΝΤΑ</span>
+                            </h2>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 md:gap-10">
+                            {filteredProducts.map((p) => (
+                                <div key={p.id} className="bg-white rounded-[2.5rem] border border-slate-200 overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 group flex flex-col uppercase">
+                                    <div className="relative aspect-[4/3] bg-white flex items-center justify-center overflow-hidden p-2">
+                                        <img src={getProductImage(p.id)} alt={p.model} className="w-full h-full object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-700" loading="lazy" />
+                                        <div className="absolute top-5 left-5">
+                                            <span className="bg-white/80 backdrop-blur-md text-red-600 text-[10px] font-black px-4 py-2 rounded-xl shadow-sm border border-red-50 tracking-widest uppercase">{p.brand}</span>
+                                        </div>
+                                    </div>
+
+                                    <div className="p-7 flex-grow flex flex-col">
+                                        <div className="flex items-center gap-2 mb-3">
+                                            <span className="text-[12px] font-mono font-bold text-red-600 uppercase tracking-tighter">
+                                                {p.id.split('-MODERN')[0]}
+                                            </span>
+                                        </div>
+                                        <h3 className="font-bold text-slate-800 text-base leading-tight mb-4 min-h-[3rem] group-hover:text-red-600 transition-colors uppercase">{p.model}</h3>
+                                        <div className="text-slate-500 text-[11px] flex items-start gap-3 mb-6 bg-slate-50 p-4 rounded-2xl border border-slate-100 leading-relaxed uppercase">
+                                            <Icon name="Shield" size={16} className="text-slate-300 shrink-0 mt-0.5" />
+                                            <span className="italic leading-relaxed uppercase">{p.specs}</span>
+                                        </div>
+                                        <div className="mt-auto pt-6 border-t border-slate-100 flex flex-col gap-4">
+                                            <div className="flex items-end justify-between uppercase">
+                                                <div>
+                                                    <p className="text-[9px] text-slate-400 font-black tracking-widest mb-1 uppercase">ΠΡΟΤΕΙΝΟΜΕΝΗ ΛΙΑΝΙΚΗ</p>
+                                                    <p className="text-2xl text-slate-900 uppercase font-black tracking-tighter">€{p.price.toFixed(2)}</p>
+                                                </div>
+                                            </div>
+                                            <a href={getBikeAlertLink(p.id)} target="_blank" rel="noopener noreferrer" className="w-full bg-slate-900 hover:bg-black text-white text-[10px] font-black uppercase tracking-widest py-3 rounded-xl flex items-center justify-center gap-2 transition-all shadow-md active:scale-95">
+                                                ΔΕΙΤΕ ΤΟ ΣΤΟ SITE <Icon name="ExternalLink" size={14} />
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </main>
+
+                    <footer className="bg-white border-t border-slate-200 pt-20 pb-10 mt-20 font-bold text-[11px] uppercase">
+                        <div className="max-w-7xl mx-auto px-4">
+                            <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16 font-black uppercase">
+                                <div className="col-span-1">
+                                    <img src={MALOSSI_LOGO} alt="MALOSSI LOGO" className="h-8 w-auto mb-4" />
+                                    <p className="text-slate-400 text-[10px] tracking-wider leading-relaxed uppercase">ΑΠΟΚΛΕΙΣΤΙΚΟΣ ΑΝΤΙΠΡΟΣΩΠΟΣ ΕΛΛΑΔΟΣ<br />BIKE ALERT HELLAS</p>
+                                    <div className="flex gap-4 mt-6">
+                                        <a href="https://www.facebook.com/BikeAlertHellas/" target="_blank" rel="noreferrer" className="p-2 bg-slate-50 rounded-lg text-slate-400 hover:text-red-600"><Icon name="Facebook" size={18} /></a>
+                                        <a href="https://www.instagram.com/bike_alert_hellas/" target="_blank" rel="noreferrer" className="p-2 bg-slate-50 rounded-lg text-slate-400 hover:text-red-600"><Icon name="Instagram" size={18} /></a>
+                                        <a href="https://www.youtube.com/channel/UCG0y_Hnsh_RjK7nU4H9_5uA" target="_blank" rel="noreferrer" className="p-2 bg-slate-50 rounded-lg text-slate-400 hover:text-red-600"><Icon name="Youtube" size={18} /></a>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4 className="text-slate-900 mb-6 uppercase">ΚΕΝΤΡΙΚΑ ΑΘΗΝΑ</h4>
+                                    <ul className="space-y-4 text-slate-500 uppercase">
+                                        <li className="flex items-start gap-3"><Icon name="MapPin" size={16} className="text-red-600" /><span className="leading-tight uppercase">ΛΕΩΦΟΡΟΣ ΑΘΗΝΩΝ 214,<br />ΑΘΗΝΑ 104 42</span></li>
+                                        <li className="flex items-center gap-3"><Icon name="Phone" size={16} className="text-red-600" /><span>210 514 1150</span></li>
+                                        <li className="flex items-center gap-3"><Icon name="Mail" size={16} className="text-red-600" /><span>INFO@BIKEALERT.GR</span></li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 className="text-slate-900 mb-6 uppercase">ΚΑΤΑΣΤΗΜΑ ΚΟΥΚΑΚΙ</h4>
+                                    <ul className="space-y-4 text-slate-500 uppercase font-black">
+                                        <li className="flex items-start gap-3"><Icon name="MapPin" size={16} className="text-red-600" /><span className="leading-tight uppercase">ΔΗΜΗΤΡΑΚΟΠΟΥΛΟΥ 105,<br />ΑΘΗΝΑ 117 41</span></li>
+                                        <li className="flex items-center gap-3"><Icon name="Phone" size={16} className="text-red-600" /><span>210 922 2410</span></li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 className="text-slate-900 mb-6 uppercase">ΚΑΤΑΣΤΗΜΑ ΘΕΣΣΑΛΟΝΙΚΗ</h4>
+                                    <ul className="space-y-4 text-slate-500 uppercase font-black">
+                                        <li className="flex items-start gap-3"><Icon name="MapPin" size={16} className="text-red-600" /><span className="leading-tight uppercase font-black">ΕΘΝΙΚΗΣ ΑΝΤΙΣΤΑΣΕΩΣ 10,<br />ΚΑΛΑΜΑΡΙΑ 551 33</span></li>
+                                        <li className="flex items-center gap-3"><Icon name="Phone" size={16} className="text-red-600" /><span>2310 415 480</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div className="pt-8 border-t border-slate-100 text-center text-slate-300 tracking-[0.5em] uppercase font-black">
+                                © 2026 BIKE ALERT HELLAS • EXCLUSIVE MALOSSI GREECE DISTRIBUTOR
+                            </div>
+                        </div>
+                    </footer>
+
+                    <button onClick={scrollToTop} className={`fixed bottom-10 right-10 bg-slate-900 text-white p-5 rounded-3xl shadow-2xl transition-all duration-500 z-50 ${showTopBtn ? 'opacity-100' : 'opacity-0 pointer-events-none uppercase'}`}><Icon name="ArrowUp" size={24} /></button>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
